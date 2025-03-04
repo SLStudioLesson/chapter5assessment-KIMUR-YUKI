@@ -1,8 +1,13 @@
 package com.taskapp.logic;
 
+import java.util.List;
+
 import com.taskapp.dataaccess.LogDataAccess;
 import com.taskapp.dataaccess.TaskDataAccess;
 import com.taskapp.dataaccess.UserDataAccess;
+import com.taskapp.exception.AppException;
+import com.taskapp.model.Task;
+import com.taskapp.model.User;
 
 public class TaskLogic {
     private final TaskDataAccess taskDataAccess;
@@ -34,8 +39,23 @@ public class TaskLogic {
      * @see com.taskapp.dataaccess.TaskDataAccess#findAll()
      * @param loginUser ログインユーザー
      */
-    // public void showAll(User loginUser) {
-    // }
+
+    //設問2、タスク一覧表示
+    public void showAll(User loginUser) {
+        //findALLメソッドを実行して、データの一覧を取得
+        List<Task> tasks = taskDataAccess.findAll();
+
+        //取得したデータを表示する
+        tasks.forEach(task ->{
+            String status = "未着手";
+            if(task.getStatus() == 1){
+                status = "着手中";
+            } else if(task.getStatus() == 2){
+                status = "完了";
+            }
+            System.out.println(task.getCode() + ".タスク名:" + task.getName() + ",担当者名:" +   ",ステータス:" + status);
+        });
+    }
 
     /**
      * 新しいタスクを保存します。
@@ -49,9 +69,14 @@ public class TaskLogic {
      * @param loginUser ログインユーザー
      * @throws AppException ユーザーコードが存在しない場合にスローされます
      */
-    // public void save(int code, String name, int repUserCode,
-    //                 User loginUser) throws AppException {
-    // }
+    public void save(int code, String name, int repUserCode,
+                    User loginUser) throws AppException {
+        User user = userDataAccess.findByCode(code);
+        if(user == null){
+            System.out.println("存在するユーザーコードを入力してください");
+        }
+            System.out.println("の登録が完了しました");
+    }
 
     /**
      * タスクのステータスを変更します。
