@@ -120,6 +120,7 @@ public class TaskUI {
     //設問3、タスクコードの入力を受け付ける
     // public void inputNewInformation() {
     //     boolean flg = true;
+
     //     while(flg){
     //         try{
     //             System.out.print("タスクコードを入力してください：");
@@ -131,8 +132,8 @@ public class TaskUI {
     //             }
     //             System.out.println("タスク名を入力してください");
     //             String name = reader.readLine();
-    //             if(name.equals(task.getName()) > 10){
-    //                 System.out.println("ユーザーのコードは半角の数字で入力してください");
+    //             if(name.length() > 10){
+    //                 System.out.println("タスク名は10文字以内で入力してください");
     //                 System.out.println();
     //                 continue;
     //             }
@@ -191,6 +192,6 @@ public class TaskUI {
      * @return 数値であればtrue、そうでなければfalse
      */
     public boolean isNumeric(String inputText) {
-        return false;
+        return inputText.chars().allMatch(c -> Character.isDigit((char) c));
     }
 }

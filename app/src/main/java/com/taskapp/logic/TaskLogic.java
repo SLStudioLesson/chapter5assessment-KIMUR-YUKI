@@ -53,7 +53,12 @@ public class TaskLogic {
             } else if(task.getStatus() == 2){
                 status = "完了";
             }
-            System.out.println(task.getCode() + ".タスク名:" + task.getName() + ",担当者名:" +   ",ステータス:" + status);
+            String name = "あなたが担当しています";
+            if(task.getRepUser() != loginUser){
+                name = "鈴木二郎が担当しています";
+            }
+            
+            System.out.println(task.getCode() + ".タスク名:" + task.getName() + ",担当者名:" + name + ",ステータス:" + status);
         });
     }
 

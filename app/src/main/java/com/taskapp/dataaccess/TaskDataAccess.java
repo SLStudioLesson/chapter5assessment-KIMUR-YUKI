@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.taskapp.model.Task;
+import com.taskapp.model.User;
 
 public class TaskDataAccess {
 
@@ -35,6 +36,8 @@ public class TaskDataAccess {
      * @see com.taskapp.dataaccess.UserDataAccess#findByCode(int)
      * @return タスクのリスト
      */
+
+    //設問2、task.csvを読み取る処理
     public List<Task> findAll() {
         List<Task> tasks = new ArrayList<Task>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -52,11 +55,12 @@ public class TaskDataAccess {
                 int code = Integer.parseInt(values[0]);
                 String name = values[1];
                 int status = Integer.parseInt(values[2]);
-                //User repUser = User.parse(values[3]);
+                //UserDataAccessのfindByCodeメソッドを実行
+                User repUser = userDataAccess.findByCode(Integer.parseInt(values[3]));
 
-                // Taskオブジェクトにマッピングしていく
-                //Task task = new Task(code, name, status, repUser);
-                //tasks.add(task);
+                //Taskオブジェクトにマッピングしていく
+                Task task = new Task(code, name, status, repUser);
+                tasks.add(task);
             }
         } catch (IOException e) {
             e.printStackTrace();
